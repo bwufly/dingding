@@ -1,0 +1,20 @@
+{
+  "name": "wufly/dingding",
+  "description": "钉钉消息发送",
+  "authors": [
+    {
+      "name": "wufly",
+      "email": "wfxykzd@163.com"
+    }
+  ],
+  "type": "package",
+  "license": "MIT",
+  "require": {
+    "php": ">=5.5.9"
+  },
+  "autoload": {
+    "psr-4": {
+      "Wufly\\Dingding\\": "src/"
+    }
+  }
+}
