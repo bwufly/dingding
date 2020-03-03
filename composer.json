@@ -1,6 +1,7 @@
 {
   "name": "wufly/dingding",
   "description": "钉钉消息发送",
+  "minimum-stability": "dev",
   "authors": [
     {
       "name": "wufly",
