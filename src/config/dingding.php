@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: wufly
@@ -9,4 +10,7 @@ return [
     //DingDing access token
     'access_token' => env('DINGDING_TOKEN', ''),
     'secret'       => env('DINGDING_SECRET', ''),
+    'prefix'       => env('DINGDING_PREFIX', ''),
+    'enabled'       => env('DINGDING_ENABLED', true),
+    'default_cache_time'       => env('DINGDING_CACHE_TIME', 60),
 ];
