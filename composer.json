@@ -1,21 +1,35 @@
 {
-  "name": "wufly/dingding",
-  "description": "钉钉消息发送",
-  "minimum-stability": "dev",
-  "authors": [
-    {
-      "name": "wufly",
-      "email": "wfxykzd@163.com"
+    "name": "wufly/dingding",
+    "description": "钉钉消息发送",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "authors": [
+        {
+            "name": "wufly",
+            "email": "wfxykzd@163.com"
+        }
+    ],
+    "type": "package",
+    "license": "MIT",
+    "require": {
+        "php": ">=5.5.9"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-develop": "1.0-dev"
+        },
+        "laravel": {
+            "providers": [
+                "Wufly\\Dingding\\DingdingServiceProvider"
+            ]
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Wufly\\Dingding\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     }
-  ],
-  "type": "package",
-  "license": "MIT",
-  "require": {
-    "php": ">=5.5.9"
-  },
-  "autoload": {
-    "psr-4": {
-      "Wufly\\Dingding\\": "src/"
-    }
-  }
 }
