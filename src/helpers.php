@@ -20,10 +20,10 @@ function ding()
         if (isset($arguments[0]) && $arguments[0]) {
             // 一段时间有相同提示就不发请求
             $cacheTime = $arguments[1] ?? Config::get('dingding.default_cache_time');
-            if (Cache::has($$arguments[0])) {
+            if (Cache::has($arguments[0])) {
                 return;
             }
-            Cache::put($$arguments[0], 1, $cacheTime);
+            Cache::put($arguments[0], 1, $cacheTime);
             return $ding->text($arguments[0]);
         }
     }
