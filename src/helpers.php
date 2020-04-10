@@ -23,7 +23,7 @@ function ding()
             if (Cache::has($arguments[0])) {
                 return;
             }
-            Cache::put($arguments[0], 1, $cacheTime);
+            Cache::put('dingding-notice:' . $arguments[0], 1, $cacheTime);
             return $ding->text($arguments[0]);
         }
     }
