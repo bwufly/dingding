@@ -65,14 +65,12 @@ class Dingding
     // 签名
     public function sign()
     {
-        $timestamp = time();
+        list($msec, $sec) = explode(' ', microtime());
+        $timestamp = (float) sprintf('%.0f', ((float) $msec + (float) $sec) * 1000);
         $string_to_sign = $timestamp . "\n" . $this->secret;
-        // HmacSHA256签名
-        $hmac_code = hash_hmac('sha256', $string_to_sign, $this->secret, true);
-        // Base64 encode
-        $encode = base64_encode($hmac_code);
-        // urlEncode
-        return urlencode($encode);
+        $signature = hash_hmac('sha256', $string_to_sign, $this->secret, true);
+        $urlencode_signature = urlencode(base64_encode($signature));
+        return 'timestamp=' . $timestamp . '&sign=' . $urlencode_signature;
     }
 
     public function text($text)
@@ -101,5 +99,4 @@ class Dingding
             ]
         ];
     }
-
 }
