@@ -7,7 +7,6 @@
  */
 
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Cache;
 
 function ding()
 {
@@ -18,13 +17,22 @@ function ding()
         $ding = new Wufly\Dingding\Dingding($arguments[1] ?? null);
 
         if (isset($arguments[0]) && $arguments[0]) {
-            // 一段时间有相同提示就不发请求
-            $cacheTime = Config::get('dingding.default_cache_time');
-            if (Cache::has($arguments[0])) {
-                return;
-            }
-            Cache::put('dingding-notice:' . $arguments[0], 1, $cacheTime);
             return $ding->text($arguments[0]);
         }
     }
+}
+
+function toSampleString($arguments)
+{
+    if (is_array($arguments)) {
+        return json_encode($arguments);
+    }
+    return $arguments;
+}
+
+function dingAt($at = null)
+{
+    $ding = new Wufly\Dingding\Dingding($arguments[1] ?? null);
+    $ding->setAt($at);
+    return $ding;
 }

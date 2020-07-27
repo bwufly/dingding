@@ -12,11 +12,13 @@
 namespace Wufly\Dingding;
 
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Cache;
 
 class Dingding
 {
     protected $secret;
     protected $token;
+    protected $at;
 
     /**
      * @return mixed
@@ -75,6 +77,12 @@ class Dingding
 
     public function text($text)
     {
+        // 一段时间有相同提示就不发请求
+        $cacheTime = Config::get('dingding.default_cache_time');
+        if (Cache::has('dingding-notice:' . $text)) {
+            return;
+        }
+        Cache::put('dingding-notice:' . $text, 1, $cacheTime);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $this->getUri());
         curl_setopt($ch, CURLOPT_POST, 1);
@@ -92,11 +100,36 @@ class Dingding
 
     public function TextData($text)
     {
-        return [
+        $res = [
             'msgtype' => 'text',
             'text'    => [
                 'content' => $text
             ]
         ];
+        if ($this->at) {
+            $res['at'] = $this->at;
+        }
+        return $res;
+    }
+
+    public function setAt($at)
+    {
+        if (!$at) {
+            $this->at = [
+                "atMobiles" => [
+                ],
+                "isAtAll"   => true
+            ];
+        } elseif (is_array($at)) {
+            $this->at = [
+                "atMobiles" => $at,
+                "isAtAll"   => false
+            ];
+        } else {
+            $this->at = [
+                "atMobiles" => [$at],
+                "isAtAll"   => false
+            ];
+        }
     }
 }
