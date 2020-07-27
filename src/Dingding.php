@@ -56,7 +56,12 @@ class Dingding
         return $this->uri;
     }
 
-    public function __construct($type = null)
+    public function __construct()
+    {
+        // $this->init();
+    }
+
+    public function init($type = null)
     {
         $this->secret = Config::get('dingding.secret' . $type);
         $token = Config::get('dingding.access_token' . $type);
@@ -75,8 +80,9 @@ class Dingding
         return 'timestamp=' . $timestamp . '&sign=' . $urlencode_signature;
     }
 
-    public function text($text)
+    public function text($text, $type = null)
     {
+        $this->init($type);
         // 一段时间有相同提示就不发请求
         $cacheTime = Config::get('dingding.default_cache_time');
         if (Cache::has('dingding-notice:' . $text)) {

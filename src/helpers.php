@@ -14,10 +14,10 @@ function ding()
     if (Config::get('dingding.enabled')) {
         $arguments = func_get_args();
 
-        $ding = new Wufly\Dingding\Dingding($arguments[1] ?? null);
+        $ding = new Wufly\Dingding\Dingding();
 
         if (isset($arguments[0]) && $arguments[0]) {
-            return $ding->text($arguments[0]);
+            return $ding->text($arguments[0], $arguments[1] ?? null);
         }
     }
 }
@@ -32,7 +32,7 @@ function toSampleString($arguments)
 
 function dingAt($at = null)
 {
-    $ding = new Wufly\Dingding\Dingding($arguments[1] ?? null);
+    $ding = new Wufly\Dingding\Dingding();
     $ding->setAt($at);
     return $ding;
 }
