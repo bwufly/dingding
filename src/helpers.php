@@ -15,11 +15,11 @@ function ding()
     if (Config::get('dingding.enabled')) {
         $arguments = func_get_args();
 
-        $ding = new Wufly\Dingding\Dingding();
+        $ding = new Wufly\Dingding\Dingding($arguments[1]);
 
         if (isset($arguments[0]) && $arguments[0]) {
             // 一段时间有相同提示就不发请求
-            $cacheTime = $arguments[1] ?? Config::get('dingding.default_cache_time');
+            $cacheTime = Config::get('dingding.default_cache_time');
             if (Cache::has($arguments[0])) {
                 return;
             }

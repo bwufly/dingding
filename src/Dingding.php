@@ -54,10 +54,10 @@ class Dingding
         return $this->uri;
     }
 
-    public function __construct()
+    public function __construct($type = null)
     {
-        $this->secret = Config::get('dingding.secret');
-        $token = Config::get('dingding.access_token');
+        $this->secret = Config::get('dingding.secret' . $type);
+        $token = Config::get('dingding.access_token' . $type);
         $this->setToken($token);
         $this->setUri();
     }
@@ -66,7 +66,7 @@ class Dingding
     public function sign()
     {
         list($msec, $sec) = explode(' ', microtime());
-        $timestamp = (float) sprintf('%.0f', ((float) $msec + (float) $sec) * 1000);
+        $timestamp = (float)sprintf('%.0f', ((float)$msec + (float)$sec) * 1000);
         $string_to_sign = $timestamp . "\n" . $this->secret;
         $signature = hash_hmac('sha256', $string_to_sign, $this->secret, true);
         $urlencode_signature = urlencode(base64_encode($signature));
